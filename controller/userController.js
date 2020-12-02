@@ -34,12 +34,38 @@ exports.index = function (req, res) {
     });
 };
 
+
+/**
+ * @api {post} /user Request all users information
+ * @apiName GetUsers
+ * @apiGroup User
+ *
+ * @apiSuccess {array} data Collection of users
+ *
+ * @apiSuccessExample Success-Response:
+ * "status": "200",
+ * "data": [
+ * {
+ *      "_id": "5fc67059f617932098dfd57b",
+ *      "created_at": "2020-12-01T16:33:29.823Z",
+ *      "name": "Name",
+ *      "email": "email@email.com",
+ *      "description": "Description",
+ *      "__v": 0
+ * }
+ * ]
+ */
 //For creating new user
 exports.add = function (req, res) {
     var user = new User();
-    user.name = req.body.name? req.body.name: user.name;
+    user.username = req.body.username;
+    user.firstname = req.body.firstname;
+    user.lastname = req.body.lastname;
+    user.password = req.body.password; //todo ENCRYPT
+    user.birthday = req.body.birthday;
     user.email = req.body.email;
-    user.description = req.body.description;
+    user.sexual_orientation = req.body.sexual_orientation;
+    user.gender = req.body.gender;
 //Save and check error
     user.save(function (err) {
         if (err) {

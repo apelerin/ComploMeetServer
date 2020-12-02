@@ -1,23 +1,62 @@
 var mongoose = require('mongoose');
-//schema
+
 var userSchema = mongoose.Schema({
-    name: {
+    username: {
+        type: String,
+        required: true
+    },
+    firstname: {
+        type: String,
+        required: true
+    },
+    lastname: {
         type: String,
         required: true
     },
     email: {
         type: String,
+        required: true,
+        unique: true
+    },
+    birthday: {
+        type: Date,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    gender: {
+        type: String,
+        enum: ["Male", "Female", "Other"],
+        required: true
+    },
+    sexual_orientation: {
+        type: String,
+        enum: ["Straight", "Gay", "Bisexual", "Undefined"],
         required: true
     },
     description: {
         type: String,
-        required: true
+        default: "Hey! I would love to hear about your BIG theory. ;-)"
     },
     created_at: {
         type: Date,
         default: Date.now
+    },
+    users_liked: {
+        type: Array,
+    },
+    isPremium: {
+        type: Boolean,
+        default: false
+    },
+    profile_pictures: {
+        type: Array,
+
     }
 });
+
 // Export User Model
 var User = module.exports = mongoose.model('user', userSchema);
 module.exports.get = function (callback, limit) {
