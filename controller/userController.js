@@ -1,6 +1,25 @@
-//Import User Model
 User = require('../model/userModel');
-//For index
+
+/**
+ * @api {get} /user Request all users information
+ * @apiName GetUsers
+ * @apiGroup User
+ *
+ * @apiSuccess {array} data Collection of users
+ *
+ * @apiSuccessExample Success-Response:
+ * "status": "200",
+ * "data": [
+ * {
+ *      "_id": "5fc67059f617932098dfd57b",
+ *      "created_at": "2020-12-01T16:33:29.823Z",
+ *      "name": "Name",
+ *      "email": "email@email.com",
+ *      "description": "Description",
+ *      "__v": 0
+ * }
+ * ]
+ */
 exports.index = function (req, res) {
     User.get(function (err, user) {
         if (err) {
@@ -9,12 +28,12 @@ exports.index = function (req, res) {
             return;
         }
         res.json({
-            status: "success",
-            message: "Got User Successfully!",
+            status: "200",
             data: user
         });
     });
 };
+
 //For creating new user
 exports.add = function (req, res) {
     var user = new User();
@@ -34,6 +53,7 @@ exports.add = function (req, res) {
         });
     });
 };
+
 // View User
 exports.view = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
@@ -48,6 +68,7 @@ exports.view = function (req, res) {
         });
     });
 };
+
 // Update User
 exports.update = function (req, res) {
     User.findById(req.params.user_id, function (err, user) {
@@ -69,6 +90,7 @@ exports.update = function (req, res) {
         });
     });
 };
+
 // Delete User
 exports.delete = function (req, res) {
     User.deleteOne({
