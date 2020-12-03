@@ -36,36 +36,35 @@ exports.index = function (req, res) {
 
 
 /**
- * @api {post} /user Request all users information
- * @apiName GetUsers
+ * @api {post} /user Create a user
+ * @apiName PostUser
  * @apiGroup User
  *
- * @apiSuccess {array} data Collection of users
+ * @apiParam {String} username  Username of the user
+ * @apiParam {String} firstname Fistname of the user
+ * @apiParam {String} lastname  Lastname of the user
+ * @apiParam {String} password  Password of the user
+ * @apiParam {String} email     Email adress of the user
+ * @apiParam {String} gender    gender of the user, one of ["Male", "Female", "Other"]
+ * @apiParam {String} sexual_orientation    sexual_orientation of the user, one of ["Straight", "Gay", "Bisexual", "Other"]
  *
  * @apiSuccessExample Success-Response:
- * "status": "200",
- * "data": [
- * {
- *      "_id": "5fc67059f617932098dfd57b",
- *      "created_at": "2020-12-01T16:33:29.823Z",
- *      "name": "Name",
- *      "email": "email@email.com",
- *      "description": "Description",
- *      "__v": 0
- * }
- * ]
+ *      HTTP/1.1 200 OK
+ *
  */
-//For creating new user
 exports.add = function (req, res) {
     var user = new User();
-    user.username = req.body.username;
-    user.firstname = req.body.firstname;
-    user.lastname = req.body.lastname;
-    user.password = req.body.password; //todo ENCRYPT
-    user.birthday = req.body.birthday;
-    user.email = req.body.email;
-    user.sexual_orientation = req.body.sexual_orientation;
-    user.gender = req.body.gender;
+    // Mandatory
+    // user.username = req.body.username;
+    // user.firstname = req.body.firstname;
+    // user.lastname = req.body.lastname;
+    // user.password = req.body.password; //todo ENCRYPT
+
+    // user.birthday = req.body.birthday; //todo check format
+
+    // user.email = req.body.email;
+    // user.sexual_orientation = req.body.sexual_orientation;
+    // user.gender = req.body.gender;
 //Save and check error
     user.save(function (err) {
         if (err) {
@@ -80,9 +79,28 @@ exports.add = function (req, res) {
     });
 };
 
-// View User
+/**
+ * @api {get} /user/{id} Request user information by id
+ * @apiName GetUser
+ * @apiGroup User
+ *
+ * @apiParam {Number} id User's unique ID.
+ *
+ * @apiUse BodyGetUserBy
+*/
+
+/**
+ * @api {get} /user/mail/{mail} Request user information by mail
+ * @apiName GetUser
+ * @apiGroup User
+ *
+ * @apiParam {String} mail User's unique mail.
+ *
+ * @apiUse BodyGetUserBy
+ */
 exports.view = function (req, res) {
-    User.findById(req.params.user_id, function (err, user) {
+    const queryParam = req.params.user_id ? {"_id": req.params.user_id} : {"email": req.params.user_email};
+    User.find(queryParam, function (err, user) {
         if (err) {
             console.log(err);
             res.sendStatus(500);

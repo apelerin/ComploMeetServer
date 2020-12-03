@@ -19,6 +19,7 @@ router.route('/user/:user_id')
     .patch(userController.update)
     .put(userController.update)
     .delete(userController.delete);
-//Export API
+router.route('/user/mail/:user_email')
+    .get(userController.view);
 
 module.exports = router;

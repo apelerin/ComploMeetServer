@@ -33,7 +33,7 @@ var userSchema = mongoose.Schema({
     },
     sexual_orientation: {
         type: String,
-        enum: ["Straight", "Gay", "Bisexual", "Undefined"],
+        enum: ["Straight", "Gay", "Bisexual", "Other"],
         required: true
     },
     description: {
