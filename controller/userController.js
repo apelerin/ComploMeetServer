@@ -97,23 +97,20 @@ exports.view = function (req, res) {
 
 // Update User
 exports.update = function (req, res) {
-    User.findById(req.params.user_id, function (err, user) {
-        if (err)
+    const entries = Object.keys(req.body);
+    const updates = {};
+
+    for (let i = 0; i< entries.length; i++) {
+        updates[entries[i]] = Object.values(req.body)[i]
+    }
+
+    User.findByIdAndUpdate(req.params.user_id, updates, function (err, result) {
+        if (err) {
             res.send(err);
-        user.name = req.body.name ? req.body.name : user.name;
-        user.email = req.body.email;
-//save and check errors
-        user.save(function (err) {
-            if (err) {
-                console.log(err);
-                res.sendStatus(500);
-                return;
-            }
-            res.json({
-                message: "User Updated Successfully",
-                data: user
-            });
-        });
+        }
+        else {
+            res.send(result);
+        }
     });
 };
 

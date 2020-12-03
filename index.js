@@ -24,6 +24,8 @@ const dbHostName = process.env.DB_IP + '/' + process.env.DB_NAME;
 dbUri = "mongodb://" + dbCredentials + '@' + dbHostName;
 options = {useNewUrlParser: true, useUnifiedTopology: true};
 const mongo = mongoose.connect(dbUri, options);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 
 mongo.then(() => {
     console.log('connected');

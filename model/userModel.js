@@ -20,7 +20,7 @@ var userSchema = mongoose.Schema({
     },
     birthday: {
         type: Date,
-        required: true
+        default: Date.now
     },
     password: {
         type: String,
