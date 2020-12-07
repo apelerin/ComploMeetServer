@@ -38,3 +38,21 @@
  *    }
  *}
  */
+
+/**
+ * @apiDefine userCreateUpdateParams
+ *
+ * @apiParam {String} username  Username of the user
+ * @apiParam {String} firstname Fistname of the user
+ * @apiParam {String} lastname  Lastname of the user
+ * @apiParam {String} password  Password of the user
+ * @apiParam {String} email     Email address of the user
+ * @apiParam {String} gender    gender of the user, one of ["Male", "Female", "Other"]
+ * @apiParam {String} sexual_orientation    Sexual_orientation of the user, one of ["Straight", "Gay", "Bisexual", "Other"]
+ * @apiParam {String} description           Bio of the user profile
+ * @apiParam {Array} [users_liked]           List of users liked by the user, default: empty
+ * @apiParem {Array} [profile_pictures]      List of pictures belonging to the user, default: empty
+ * @apiParam {Boolean} [isPremium]           Whereas the user is premium or not, default: false
+ *
+ *
+ */

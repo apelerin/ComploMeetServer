@@ -40,13 +40,7 @@ exports.index = function (req, res) {
  * @apiName PostUser
  * @apiGroup User
  *
- * @apiParam {String} username  Username of the user
- * @apiParam {String} firstname Fistname of the user
- * @apiParam {String} lastname  Lastname of the user
- * @apiParam {String} password  Password of the user
- * @apiParam {String} email     Email adress of the user
- * @apiParam {String} gender    gender of the user, one of ["Male", "Female", "Other"]
- * @apiParam {String} sexual_orientation    sexual_orientation of the user, one of ["Straight", "Gay", "Bisexual", "Other"]
+ * @apiUse userCreateUpdateParams
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 OK
