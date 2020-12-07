@@ -21,5 +21,8 @@ router.route('/user/:user_id')
     .delete(userController.delete);
 router.route('/user/mail/:user_email')
     .get(userController.view);
+router.route('/user/like')
+    .post(userController.addLike)
+    .delete(userController.removeLike);
 
 module.exports = router;

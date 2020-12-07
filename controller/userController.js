@@ -116,14 +116,7 @@ exports.update = function (req, res) {
         updates[entries[i]] = Object.values(req.body)[i]
     }
 
-    User.findByIdAndUpdate(req.params.user_id, updates, function (err, result) {
-        if (err) {
-            res.send(err);
-        }
-        else {
-            res.send(result);
-        }
-    });
+    updateUser(updates, req, res)
 };
 
 // Delete User
@@ -141,4 +134,28 @@ exports.delete = function (req, res) {
             message: 'User Deleted'
         })
     })
+}
+
+exports.addLike = function (req, res) {
+    const likedUserData = {'user_id': req.body.liked_user_id}
+    const update = {$push: {users_liked: likedUserData}}
+    updateUser(update, req, res)
+}
+
+exports.removeLike = function (req, res) {
+    const likedUserData = {'user_id': req.body.liked_user_id}
+    const update = {$pull: {users_liked: likedUserData}}
+    updateUser(update, req, res)
+}
+
+// Update a user given an update param
+function updateUser(update, req, res) {
+    User.findByIdAndUpdate(req.body.user_id, update, function (err, result) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send(result);
+        }
+    });
 }
