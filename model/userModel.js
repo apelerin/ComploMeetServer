@@ -53,7 +53,6 @@ var userSchema = mongoose.Schema({
     },
     profile_pictures: {
         type: Array,
-
     }
 });
 

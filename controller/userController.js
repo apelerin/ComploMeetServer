@@ -49,16 +49,16 @@ exports.index = function (req, res) {
 exports.add = function (req, res) {
     var user = new User();
     // Mandatory
-    // user.username = req.body.username;
-    // user.firstname = req.body.firstname;
-    // user.lastname = req.body.lastname;
-    // user.password = req.body.password; //todo ENCRYPT
+    user.username = req.body.username;
+    user.firstname = req.body.firstname;
+    user.lastname = req.body.lastname;
+    user.password = req.body.password; //todo ENCRYPT
 
     // user.birthday = req.body.birthday; //todo check format
 
-    // user.email = req.body.email;
-    // user.sexual_orientation = req.body.sexual_orientation;
-    // user.gender = req.body.gender;
+    user.email = req.body.email;
+    user.sexual_orientation = req.body.sexual_orientation;
+    user.gender = req.body.gender;
 //Save and check error
     user.save(function (err) {
         if (err) {
