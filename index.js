@@ -6,9 +6,7 @@ var port = process.env.PORT || 4040;
 
 app.get('/', (req, res) => res.send('Welcome to Express')); // keeping that for example, to delete
 
-app.listen(port, function() {
-    console.log("Running FirstRest on Port "+ port);
-})
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -31,4 +29,8 @@ mongo.then(() => {
     console.log('connected');
 }, error => {
     console.log(error, 'error');
+})
+
+app.listen(port, function() {
+    console.log("Running FirstRest on Port "+ port);
 })

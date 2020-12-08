@@ -22,4 +22,15 @@ router.route('/user/:user_id')
 router.route('/user/mail/:user_email')
     .get(userController.view);
 
+//Import Topic Controller
+
+var topicController = require('./controller/topicController');
+
+//topic routes
+router.route('/topic', )
+    .get(topicController.index)
+    .post(topicController.add);
+
+router.route('/topic/:topic_name', )
+    .get(topicController.view)
 module.exports = router;
