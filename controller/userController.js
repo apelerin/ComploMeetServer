@@ -23,7 +23,11 @@ User = require('../model/userModel');
  * ]
  */
 exports.index = function (req, res) {
-    const params = { _id: { $ne: req.body._id } }
+    const params = { _id: { $ne: req.body._id },
+        sexual_orientation:{$in:req.body.filters.sexual_orientation},
+        conspiracies:{$in:req.body.filters.conspiracies},
+        genders:{$in:req.body.filters.genders}
+    }
     User.find(params, function (err, users) {
         if (err) {
             console.log(err);
