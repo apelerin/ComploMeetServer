@@ -2,7 +2,9 @@ require('dotenv').config()
 
 let express = require('express')
 let app = express();
-var port = process.env.PORT || 4040;
+const port = process.env.PORT || 4040;
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 app.get('/', (req, res) => res.send('Welcome to Express')); // keeping that for example, to delete
 

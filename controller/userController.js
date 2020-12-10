@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 User = require('../model/userModel');
 
 /**
@@ -46,13 +48,13 @@ exports.index = function (req, res) {
  *      HTTP/1.1 200 OK
  *
  */
-exports.add = function (req, res) {
+exports.register = function (req, res) {
     var user = new User();
     // Mandatory
     user.username = req.body.username;
     user.firstname = req.body.firstname;
     user.lastname = req.body.lastname;
-    user.password = req.body.password; //todo ENCRYPT
+    user.password = bcrypt.hashSync(req.body.password, 8); //todo ENCRYPT
 
     // user.birthday = req.body.birthday; //todo check format
 
@@ -66,22 +68,11 @@ exports.add = function (req, res) {
             res.sendStatus(500);
             return;
         }
-        res.json({
-            message: "New User Added!",
-            data: user
+        let token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN, {expiresIn: 3600 // expires in 1 hours
         });
+        res.status(200).send({ auth: true, token: token, user: user});
     });
 };
-
-/**
- * @api {get} /user/{id} Request user information by id
- * @apiName GetUser
- * @apiGroup User
- *
- * @apiParam {Number} id User's unique ID.
- *
- * @apiUse BodyGetUserBy
-*/
 
 /**
  * @api {get} /user/mail/{mail} Request user information by mail
@@ -92,20 +83,23 @@ exports.add = function (req, res) {
  *
  * @apiUse BodyGetUserBy
  */
-exports.view = function (req, res) {
-    const queryParam = req.params.user_id ? {"_id": req.params.user_id} : {"email": req.params.user_email};
-    User.find(queryParam, function (err, user) {
-        if (err) {
-            console.log(err);
-            res.sendStatus(500);
+exports.login = async function (req, res) {
+    const queryParam = {"email": req.body.email};
+    const user = await User.findOne(queryParam).exec();
+    if (!user) {
+        res.status(404).send("Unknown user, mail or id does not match.");
+        res.end();
+        return;
+    } else if (!bcrypt.compareSync(req.body.password, user.password)) {
+            res.status(401).send("Incorrect password");
+            res.end();
             return;
-        }
-        res.json({
-            message: 'User Details',
-            data: user
-        });
+    }
+    let token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN, {expiresIn: 3600 // expires in 1 hours
     });
+    res.status(200).send({ auth: true, token: token, user: user});
 };
+
 
 // Update User
 exports.update = function (req, res) {

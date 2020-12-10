@@ -13,18 +13,20 @@ var userController = require('./controller/userController');
 var chatController = require('./controller/chatController');
 // user routes
 router.route('/user', )
-    .get(userController.index)
-    .post(userController.add);
-router.route('/user/:user_id')
-    .get(userController.view)
+    //todo get one user
     .patch(userController.update)
     .put(userController.update)
     .delete(userController.delete);
-router.route('/user/mail/:user_email')
-    .get(userController.view);
+router.route('/users')
+    .get(userController.index);
 router.route('/user/like')
     .post(userController.addLike)
     .delete(userController.removeLike);
+
+router.route('/register')
+    .post(userController.register);
+router.route('/login')
+    .post(userController.login);
 
 router.route('/conversation')
     .post(chatController.addConversation);

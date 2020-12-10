@@ -52,8 +52,8 @@ var userSchema = mongoose.Schema({
         default: false
     },
     profile_pictures: {
-        type: Array,
-    }
+        type: Array
+    },
 });
 
 // Export User Model
