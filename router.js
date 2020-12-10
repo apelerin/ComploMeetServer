@@ -18,7 +18,7 @@ router.route('/user', )
     .put(userController.update)
     .delete(userController.delete);
 router.route('/users')
-    .get(userController.index);
+    .post(userController.index);
 router.route('/user/like')
     .post(userController.addLike)
     .delete(userController.removeLike);

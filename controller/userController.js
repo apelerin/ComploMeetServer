@@ -11,7 +11,7 @@ User = require('../model/userModel');
  *
  * @apiSuccessExample Success-Response:
  * "status": "200",
- * "data": [
+ * "users": [
  * {
  *      "_id": "5fc67059f617932098dfd57b",
  *      "created_at": "2020-12-01T16:33:29.823Z",
@@ -23,7 +23,8 @@ User = require('../model/userModel');
  * ]
  */
 exports.index = function (req, res) {
-    User.get(function (err, user) {
+    const params = { _id: { $ne: req.body._id } }
+    User.find(params, function (err, users) {
         if (err) {
             console.log(err);
             res.sendStatus(500);
@@ -31,9 +32,9 @@ exports.index = function (req, res) {
         }
         res.json({
             status: "200",
-            data: user
+            users: users
         });
-    });
+    }).select("-password");
 };
 
 
