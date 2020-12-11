@@ -5,8 +5,9 @@ let app = express();
 const port = process.env.PORT || 4040;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const path = require("path")
 
-app.get('/', (req, res) => res.send('Welcome to Express')); // keeping that for example, to delete
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.listen(port, function() {
     console.log("Running FirstRest on Port "+ port);
@@ -39,6 +40,10 @@ app.use(function (req, res, next) {
 
 let apiRouter = require("./router")
 app.use('/api', apiRouter)
+
+app.get('*', (req, res) => {
+    res.sendFile(__dirname, '/dist/index.html');
+});
 
 let mongoose = require('mongoose');
 
