@@ -28,12 +28,24 @@ var userSchema = mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ["Male", "Female", "Other"],
+        enum: ["Male", "Female", "Not specified"],
         required: true
     },
     sexual_orientation: {
         type: String,
-        enum: ["Straight", "Gay", "Bisexual", "Other"],
+        enum: [
+            'Asexual',
+            'Bisexual',
+            'Heterosexual',
+            'Homosexual',
+            'Androphilia',
+            'Gynephilia',
+            'Bi-curious',
+            'Gray asexual',
+            'Non-heterosexual',
+            'Pansexual',
+            'Queer'
+        ],
         required: true
     },
     description: {
@@ -54,6 +66,13 @@ var userSchema = mongoose.Schema({
     profile_pictures: {
         type: Array
     },
+    conversationInvolvedIn: {
+        type: Array
+    },
+
+    conspiracies: {
+      type: Array
+    }
 });
 
 // Export User Model

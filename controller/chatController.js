@@ -1,8 +1,9 @@
 Conversation = require('../model/conversationModel');
 ChatMessage = require('../model/chatMessageModel');
+var userController = require('../controller/userController');
 
 /**
- * @api {get} /conversation/ Request information of one conversation
+ * @api {post} /user/conversations Get
  * @apiName GetConversation
  * @apiGroup Conversation
  *
@@ -16,25 +17,32 @@ ChatMessage = require('../model/chatMessageModel');
  * {
  *      "_id": "5fc67059f617932098dfd57b",
  *      "participants": ["5fc67059f617932098dfd57b", "5fc67059f617932098dfd57b"],
-
  * }
-
  */
-exports.index = function (req, res) {
-    const queryParam = {"_id": req.params.conversation_id}
-    Conversation.find(queryParam, function (err, conversation) {
-            if (err) {
-                console.log(err);
-                res.sendStatus(500);
-                return;
-            }
-            res.json({
-                message: 'Conversation Details',
-                data: conversation
-            });
-        }
-    );
+exports.conversationsOfUser = async function (req, res) {
+    const idConversations = await userController.getUserConversationsId(req.body._id);
+    let conversations = await Conversation.find({_id: {$in: idConversations}}).exec()
+    let conversationObjectArray = []
+    var i = 0;
+    for (const convers of conversations) {
+        let oppositeId = getOppositeId(convers.participants, req.body._id);
+        let oppositeUser = await userController.getUserNameById(oppositeId)
+        conversationObjectArray.push({
+            '_id': convers._id,
+            'participants': convers.participants,
+            'oppositeUser': oppositeUser
+        })
+        i++;
+    }
+    res.status(200).send({listConversation: conversationObjectArray})
 };
+
+function getOppositeId(participants, baseId) {
+    if (participants[0] === baseId) {
+        return participants[1]
+    }
+    return participants[0]
+}
 
 /**
  * @api {post} /conversation Create a conversation
@@ -56,6 +64,7 @@ exports.addConversation = function (req, res) {
             res.sendStatus(500);
             return;
         }
+        userController.addUsersConversation([req.body.user1, req.body.user2], conversation._id)
         res.json({
             message: "New conversation Added!",
             data: conversation

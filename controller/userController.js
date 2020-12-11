@@ -154,3 +154,25 @@ function updateUser(update, req, res) {
         }
     });
 }
+
+exports.addUsersConversation = async function (usersIds, conversationId) {
+    await User.updateMany({_id : {$in : usersIds}}, {conversationInvolvedIn: {$push : conversationId}}).exec()
+}
+
+exports.getUserConversationsId = async function (userId) {
+    return new Promise(((resolve, reject) => {
+        User.findOne({_id: userId}).select('conversationInvolvedIn -_id').exec()
+            .then((convoList) => {
+                resolve(convoList.conversationInvolvedIn)
+            })
+    }))
+}
+
+exports.getUserNameById = async function (userId) {
+    return new Promise(((resolve, reject) => {
+        User.findOne({_id: userId}).select('username _id').exec()
+            .then((user) => {
+                resolve(user)
+            })
+    }))
+}

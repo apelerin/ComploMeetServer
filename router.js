@@ -30,8 +30,8 @@ router.route('/login')
 
 router.route('/conversation')
     .post(chatController.addConversation);
-router.route('/conversation/:conversation_id')
-    .get(chatController.index)
+router.route('/user/conversations')
+    .post(chatController.conversationsOfUser)
 router.route('/conversation/:conversation_id/message')
     .get(chatController.getMessagesOfConversation)
     .post(chatController.addMessage);
