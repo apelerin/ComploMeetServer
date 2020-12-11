@@ -13,7 +13,6 @@ var userController = require('./controller/userController');
 var chatController = require('./controller/chatController');
 // user routes
 router.route('/user', )
-    //todo get one user
     .patch(userController.update)
     .put(userController.update)
     .delete(userController.delete);

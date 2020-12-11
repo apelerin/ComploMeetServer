@@ -106,7 +106,7 @@ exports.getMessagesOfConversation = function (req, res) {
             }
             res.json({
                 message: 'Messages corresponding to conversation',
-                data: messages
+                messages: messages
             });
         }
     );
@@ -125,12 +125,12 @@ exports.getMessagesOfConversation = function (req, res) {
  *      HTTP/1.1 200 OK
  *
  */
-exports.addMessage = function (req, res) {
+exports.addMessage = async function (req, res) {
     var message = new ChatMessage();
-    message.userFromId = req.body.userFromId;
     message.conversationId = req.params.conversation_id;
+    message.userFromId = req.body.userFromId;
     message.content = req.body.content;
-    console.log(message)
+    message.userFromUsername = await userController.getUserNameById(message.userFromId)
     message.save(function (err) {
         if (err) {
             console.log(err);

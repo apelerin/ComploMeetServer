@@ -55,7 +55,7 @@ exports.register = function (req, res) {
     user.username = req.body.username;
     user.firstname = req.body.firstname;
     user.lastname = req.body.lastname;
-    user.password = bcrypt.hashSync(req.body.password, 8); //todo ENCRYPT
+    user.password = bcrypt.hashSync(req.body.password, 8);
 
     // user.birthday = req.body.birthday; //todo check format
 
