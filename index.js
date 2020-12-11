@@ -17,7 +17,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+    const allowedOrigins = ['http://163.172.240.193:8080', 'http://localhost:8080'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
