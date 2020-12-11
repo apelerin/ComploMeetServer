@@ -6,7 +6,7 @@ To develop on this project you need a .env containing the following env variable
 
 `DB_NAME`         # name of the db
 
-`DB_USER         # user name of the db
+`DB_USER`         # user name of the db
 
 `DB_PASSWORD`     # password of the user on the db
 
