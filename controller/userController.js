@@ -23,10 +23,32 @@ User = require('../model/userModel');
  * ]
  */
 exports.index = function (req, res) {
+    const sexual_orientation = req.body.filters.sexual_orientation ? req.body.filters.sexual_orientation : [
+        "Straight",
+        "Gay",
+        "Bisexual",
+        "Other",
+        'Bisexual',
+        'Heterosexual',
+        'Homosexual',
+        'Androphilia',
+        'Gynephilia',
+        'Bi-curious',
+        'Gray asexual',
+        'Non-heterosexual',
+        'Pansexual',
+        'Queer'];
+    const conspiracies = req.body.filters.conspiracies ? req.body.filters.conspiracies : [
+        'antivax',
+        'anti-covid',
+        '5G',
+        'flat earth',
+        'illuminati'];
+    const genders = req.body.filters.genders ? req.body.filters.genders : ["Male", "Female", "Other"];
     const params = { _id: { $ne: req.body._id },
-        sexual_orientation:{$in:req.body.filters.sexual_orientation},
-        conspiracies:{$in:req.body.filters.conspiracies},
-        genders:{$in:req.body.filters.genders}
+        sexual_orientation:{$in:sexual_orientation},
+        conspiracies:{$in:conspiracies},
+        genders:{$in:genders}
     }
     User.find(params, function (err, users) {
         if (err) {

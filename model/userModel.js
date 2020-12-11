@@ -33,8 +33,28 @@ var userSchema = mongoose.Schema({
     },
     sexual_orientation: {
         type: String,
-        enum: ["Straight", "Gay", "Bisexual", "Other"],
+        enum: ["Straight", "Gay", "Bisexual", "Other",
+            'Bisexual',
+            'Heterosexual',
+            'Homosexual',
+            'Androphilia',
+            'Gynephilia',
+            'Bi-curious',
+            'Gray asexual',
+            'Non-heterosexual',
+            'Pansexual',
+            'Queer',],
         required: true
+    },
+    conspiracies: {
+      type:String,
+      enum:[
+          'antivax',
+          'anti-covid',
+          '5G',
+          'flat earth',
+          'illuminati',
+      ]
     },
     description: {
         type: String,
