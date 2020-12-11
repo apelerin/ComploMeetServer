@@ -47,7 +47,7 @@ var userSchema = mongoose.Schema({
         required: true
     },
     conspiracies: {
-      type:String,
+      type:Array(String),
       enum:[
           'antivax',
           'anti-covid',

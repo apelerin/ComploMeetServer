@@ -23,33 +23,18 @@ User = require('../model/userModel');
  * ]
  */
 exports.index = function (req, res) {
-    const sexual_orientation = req.body.filters.sexual_orientation ? req.body.filters.sexual_orientation : [
-        "Straight",
-        "Gay",
-        "Bisexual",
-        "Other",
-        'Bisexual',
-        'Heterosexual',
-        'Homosexual',
-        'Androphilia',
-        'Gynephilia',
-        'Bi-curious',
-        'Gray asexual',
-        'Non-heterosexual',
-        'Pansexual',
-        'Queer'];
-    const conspiracies = req.body.filters.conspiracies ? req.body.filters.conspiracies : [
-        'antivax',
-        'anti-covid',
-        '5G',
-        'flat earth',
-        'illuminati'];
-    const genders = req.body.filters.genders ? req.body.filters.genders : ["Male", "Female", "Other"];
     const params = { _id: { $ne: req.body._id },
-        sexual_orientation:{$in:sexual_orientation},
-        conspiracies:{$in:conspiracies},
-        genders:{$in:genders}
     }
+    const sexual_orientation = req.body.filters.sexual_orientation;
+    const conspiracies = req.body.filters.conspiracies;
+    // const genders = req.body.filters.genders;
+    if(sexual_orientation.length>0){
+        params.sexual_orientation={$in:sexual_orientation}
+    }
+    if(conspiracies.length>0){
+        params.conspiracies={$in:conspiracies}
+    }
+    console.log(params)
     User.find(params, function (err, users) {
         if (err) {
             console.log(err);
@@ -88,6 +73,7 @@ exports.register = function (req, res) {
     user.email = req.body.email;
     user.sexual_orientation = req.body.sexual_orientation;
     user.gender = req.body.gender;
+    user.conspiracies=req.body.conspiracies;
 //Save and check error
     user.save(function (err) {
         if (err) {
