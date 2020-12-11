@@ -48,6 +48,16 @@ var userSchema = mongoose.Schema({
         ],
         required: true
     },
+    conspiracies: {
+      type:Array(String),
+      enum:[
+          'antivax',
+          'anti-covid',
+          '5G',
+          'flat earth',
+          'illuminati',
+      ]
+    },
     description: {
         type: String,
         default: "Hey! I would love to hear about your BIG theory. ;-)"
@@ -69,10 +79,6 @@ var userSchema = mongoose.Schema({
     conversationInvolvedIn: {
         type: Array
     },
-
-    conspiracies: {
-      type: Array
-    }
 });
 
 // Export User Model

@@ -23,7 +23,18 @@ User = require('../model/userModel');
  * ]
  */
 exports.index = function (req, res) {
-    const params = { _id: { $ne: req.body._id } }
+    const params = { _id: { $ne: req.body._id },
+    }
+    const sexual_orientation = req.body.filters.sexual_orientation;
+    const conspiracies = req.body.filters.conspiracies;
+    // const genders = req.body.filters.genders;
+    if(sexual_orientation.length>0){
+        params.sexual_orientation={$in:sexual_orientation}
+    }
+    if(conspiracies.length>0){
+        params.conspiracies={$in:conspiracies}
+    }
+    console.log(params)
     User.find(params, function (err, users) {
         if (err) {
             console.log(err);
@@ -62,6 +73,7 @@ exports.register = function (req, res) {
     user.email = req.body.email;
     user.sexual_orientation = req.body.sexual_orientation;
     user.gender = req.body.gender;
+    user.conspiracies=req.body.conspiracies;
 //Save and check error
     user.save(function (err) {
         if (err) {
