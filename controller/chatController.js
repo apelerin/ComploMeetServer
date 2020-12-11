@@ -67,7 +67,7 @@ exports.addConversation = function (req, res) {
         userController.addUsersConversation([req.body.user1, req.body.user2], conversation._id)
         res.json({
             message: "New conversation Added!",
-            data: conversation
+            idConv: conversation
         });
     });
 };

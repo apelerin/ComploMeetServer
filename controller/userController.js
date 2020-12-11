@@ -167,8 +167,8 @@ function updateUser(update, req, res) {
     });
 }
 
-exports.addUsersConversation = async function (usersIds, conversationId) {
-    await User.updateMany({_id : {$in : usersIds}}, {conversationInvolvedIn: {$push : conversationId}}).exec()
+exports.addUsersConversation = function (usersIds, conversationId) {
+    User.updateMany({_id: {$in: usersIds}}, {$push: {conversationInvolvedIn: conversationId}}).exec().then()
 }
 
 exports.getUserConversationsId = async function (userId) {
